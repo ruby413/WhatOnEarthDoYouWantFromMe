@@ -22,7 +22,7 @@ def normalize_repetitions(text, repeat_limit=2):
     return text
 
 
-# 2. 텍스트 정제 + 토큰화 진행
+# 2. 텍스트 정제
 
 def tokenize_and_clean_text(text, stopword_list=None, repeat_limit=2):
     text = normalize_repetitions(text, repeat_limit=repeat_limit)
@@ -33,8 +33,7 @@ def tokenize_and_clean_text(text, stopword_list=None, repeat_limit=2):
     return tokens
 
 
-# 3. 발화 단위 전처리
-
+# 3. 한줄 단위 전처리
 def preprocess_conversation_lines(
     text,
     stopwords=None,
@@ -55,19 +54,18 @@ def preprocess_conversation_lines(
             else:
                 processed = [speaker_token] + processed
 
-        results.append(processed)
+        if processed:
+            results.append(" ".join(processed).strip())
 
     return results
 
 
-# 4. flatten 함수
-
+# 4. 여러줄을 한 줄로 flatten 함수
 def flatten_utterances(utterance_tokens_list, sep_token=" "):
-    return sep_token.join([" ".join(tokens) for tokens in utterance_tokens_list]).strip()
+    return sep_token.join(utterance_tokens_list).strip()
 
 
 # 5.  전체 전처리 파이프라인
-
 def preprocess(
     text,
     stopwords=None,
