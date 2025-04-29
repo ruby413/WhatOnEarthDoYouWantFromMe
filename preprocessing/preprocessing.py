@@ -63,7 +63,7 @@ def preprocess_conversation_lines(
 # 4. flatten 함수
 
 def flatten_utterances(utterance_tokens_list, sep_token=" "):
-    return sep_token.join([" ".join(tokens) for tokens in utterance_tokens_list])
+    return sep_token.join([" ".join(tokens) for tokens in utterance_tokens_list]).strip()
 
 
 # 5.  전체 전처리 파이프라인
